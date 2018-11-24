@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.yadaapps.caear.pedidosmaggys.BaseDeDatos
 import com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments.AdapterFragment
@@ -21,13 +22,17 @@ import kotlinx.android.synthetic.main.fragment_pedir.view.*
 import kotlinx.android.synthetic.main.menus.view.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseReference
-
+import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
 
 
 class PedidosFragment : Fragment() {
     lateinit var referenciaConfirmados1 : DatabaseReference
     lateinit var pedidosList1:MutableList<BaseDeDatos>
     lateinit var recyclerPedidos1: RecyclerView
+
+    lateinit var referenciaUsuarios : DatabaseReference
+    lateinit var usuariosList:MutableList<DatosUsuario>
+    lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -36,7 +41,11 @@ class PedidosFragment : Fragment() {
         referenciaConfirmados1 = FirebaseDatabase.getInstance().getReference("Confirmados")
         pedidosList1= mutableListOf()
         recyclerPedidos1=v.recyPedidos
-        val nombreDeCliente="Carlos"
+
+
+
+
+        val nombreDeCliente=FirebaseAuth.getInstance().uid
         val btn_agregar=v.btnFragment
 
 
@@ -61,7 +70,7 @@ class PedidosFragment : Fragment() {
                        // .key // this will create a new unique key Map<String, Object> value = new HashMap<>(); value.put("name", "shesh"); value.put("address", "lucknow"); value.put("timestamp", ServerValue.TIMESTAMP); ref.child(key).setValue(value);
                     for (h in p0.children)
                     {
-                        val cliente = h.getValue(BaseDeDatos::class.java)?.cliente
+                        val cliente = h.getValue(BaseDeDatos::class.java)?.id
                         val hero = h.getValue(BaseDeDatos::class.java)
                         if (cliente==nombreDeCliente){
                             pedidosList1.add(hero!!)

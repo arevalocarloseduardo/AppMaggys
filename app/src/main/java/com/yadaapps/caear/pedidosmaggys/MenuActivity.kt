@@ -10,19 +10,28 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
 import com.yadaapps.caear.pedidosmaggys.Fragments.PedidosFragment
 import com.yadaapps.caear.pedidosmaggys.Fragments.PedirFragment
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
+import kotlinx.android.synthetic.main.content_menu.*
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var pedirFragment:PedirFragment//Primer Caso para crear un fragment
     lateinit var pedidosFragment:PedidosFragment
 
+    lateinit var referenciaUsuarios : DatabaseReference
+    lateinit var usuariosList:MutableList<DatosUsuario>
+    lateinit var auth: FirebaseAuth
 
+    lateinit var txtWelcome:TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +39,33 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
 
+        referenciaUsuarios = FirebaseDatabase.getInstance().getReference("Users")
+        usuariosList= mutableListOf()
 
+        referenciaUsuarios.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (h in p0.children)
+                    {
+                        val user =FirebaseAuth.getInstance().uid
+                        val cliente = h.getValue(DatosUsuario::class.java)?.uid
+                        val hero = h.getValue(DatosUsuario::class.java)
+                        if (cliente==user){
+                            usuariosList.add(hero!!)
+                        }
+                    }
+                    for (h in usuariosList){
+                        txtWelcome.text = "Bienvenido "+h.nombre
+                    }
+
+                }
+            }
+
+
+        })
 
         /*var fire = FirebaseAuth.getInstance()
 
@@ -39,8 +74,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this,LoginActivity::class.java))
             }
 */
+
         pedirFragment=PedirFragment.newInstance()//segundo Paso para crear un fragment
         pedidosFragment=PedidosFragment.newInstance()
+
+        txtWelcome=txtBien
 
 
         val toggle = ActionBarDrawerToggle(
@@ -70,6 +108,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.action_settings ->  {
+
                 var firse = FirebaseAuth.getInstance()
                 firse.signOut()
                 //val uid = FirebaseAuth.getInstance().uid
@@ -87,6 +126,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
+                txtWelcome.visibility= View.INVISIBLE
                 supportFragmentManager
                 .beginTransaction()
                     .replace(R.id.contenedorFragments,pedirFragment)
@@ -95,6 +135,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
             R.id.nav_gallery -> {
+                txtWelcome.visibility= View.INVISIBLE
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.contenedorFragments,pedidosFragment)

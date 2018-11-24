@@ -54,7 +54,7 @@ class RecyclerAdapter(var list: MutableList<Upload>): RecyclerView.Adapter<Recyc
                 })
 //${data.descripcion}
             itemView.setOnClickListener{
-                Toast.makeText(itemView.context,"probate",Toast.LENGTH_LONG).show()
+                Toast.makeText(itemView.context,"${data.descripcion}",Toast.LENGTH_LONG).show()
             }
         }
     }

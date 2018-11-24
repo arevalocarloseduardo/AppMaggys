@@ -133,9 +133,10 @@ class PedirFragment : Fragment() {
                 ?.commit()
 
             for (h in pedidosList){
-                val heroId = referenciaPedidos.push().key.toString()
-                val hero = BaseDeDatos(heroId,nomCliente.text.toString().trim(),h.menu,h.llevar,h.cant,h.precio,telefono.text.toString().trim())
-                referenciaConfirmados.child(heroId).setValue(hero)
+                val heroId =  FirebaseAuth.getInstance().uid.toString()
+                val heros = referenciaPedidos.push().key.toString()
+                val hero = BaseDeDatos(heroId,nomCliente.text.toString().trim(),h.menu,h.llevar,h.cant,h.precio,heros)
+                referenciaConfirmados.child(heros).setValue(hero)
             }
             referenciaPedidos.removeValue()
         }

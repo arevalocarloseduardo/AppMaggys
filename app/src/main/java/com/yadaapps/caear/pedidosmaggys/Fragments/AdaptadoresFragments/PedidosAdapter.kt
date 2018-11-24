@@ -36,7 +36,7 @@ class PedidosAdapter(var list: MutableList<BaseDeDatos>): RecyclerView.Adapter<P
         }
         private fun deleteInfo(data: BaseDeDatos) {
             val myBaseDeDatos = FirebaseDatabase.getInstance().getReference("Confirmados")
-            myBaseDeDatos.child(data.id).removeValue()
+            myBaseDeDatos.child(data.telefono).removeValue()
         }
     }
 }

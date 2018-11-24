@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PedidosMaggys</string>
     <string name="title_activity_menu">MenuActivity</string>
-    <string name="no_tenes_pedidos">Parece que aun no tenes pedidos</string>
+    <string name="no_tenes_pedidos">Parece que aun no tenés pedidos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
