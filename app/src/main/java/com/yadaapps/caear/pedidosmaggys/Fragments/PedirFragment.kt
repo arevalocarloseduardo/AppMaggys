@@ -10,12 +10,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.yadaapps.caear.pedidosmaggys.*
 import com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments.AdapterFragment
 import com.yadaapps.caear.pedidosmaggys.R
+import kotlinx.android.synthetic.main.fragment_pedir.*
 import kotlinx.android.synthetic.main.fragment_pedir.view.*
 
 class PedirFragment : Fragment() {
@@ -29,6 +30,9 @@ class PedirFragment : Fragment() {
 
     lateinit var recyclerImagenes: RecyclerView
     lateinit var recyclerPedidos: RecyclerView
+    lateinit var category:TextView
+    internal lateinit var spiner:Spinner
+    internal var listaSpin= arrayOf("Menus","Postres","Bebidas","Platos Frios","Platos a la carta","Combos","Licuados")
 
     var precioTotal=0
 
@@ -42,6 +46,30 @@ class PedirFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        spiner=spinner
+        val arrayAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, listaSpin)
+        spiner?.adapter = arrayAdapter
+
+        spiner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
+                when (parent?.getItemAtPosition(position)) {
+                    "Menus" -> { Toast.makeText(activity,"seleccionaste menu",Toast.LENGTH_LONG).show()
+                    }
+                    "Postres" -> { Toast.makeText(activity,"seleccionaste chimichanga",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val v= inflater.inflate(R.layout.fragment_pedir, container, false)
@@ -51,7 +79,9 @@ class PedirFragment : Fragment() {
             intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
-        referenciaImagenes = FirebaseDatabase.getInstance().getReference("usuarios")
+
+        val categoria="usuarios"
+        referenciaImagenes = FirebaseDatabase.getInstance().getReference(categoria)
         referenciaPedidos = FirebaseDatabase.getInstance().getReference("Pedidos")
         referenciaConfirmados = FirebaseDatabase.getInstance().getReference("Confirmados")
         imagenList= mutableListOf()
@@ -120,8 +150,7 @@ class PedirFragment : Fragment() {
         }
         )
 
-        val nomCliente = v.etNombre
-        val telefono = v.etTel
+
         val btn =v.btnEnviar
         btn.setOnClickListener {
             val frag2 = PedidosFragment()
@@ -135,7 +164,7 @@ class PedirFragment : Fragment() {
             for (h in pedidosList){
                 val heroId =  FirebaseAuth.getInstance().uid.toString()
                 val heros = referenciaPedidos.push().key.toString()
-                val hero = BaseDeDatos(heroId,nomCliente.text.toString().trim(),h.menu,h.llevar,h.cant,h.precio,heros)
+                val hero = BaseDeDatos(heroId,"",h.menu,h.llevar,h.cant,h.precio,heros)
                 referenciaConfirmados.child(heros).setValue(hero)
             }
             referenciaPedidos.removeValue()
