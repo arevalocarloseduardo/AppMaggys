@@ -30,7 +30,7 @@ class PedirFragment : Fragment() {
 
     lateinit var recyclerImagenes: RecyclerView
     lateinit var recyclerPedidos: RecyclerView
-    lateinit var category:TextView
+    lateinit var category: String
     internal lateinit var spiner:Spinner
     internal var listaSpin= arrayOf("Menus","Postres","Bebidas","Platos Frios","Platos a la carta","Combos","Licuados")
 
@@ -58,17 +58,57 @@ class PedirFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-
+                category = "suarios"
                 when (parent?.getItemAtPosition(position)) {
-                    "Menus" -> { Toast.makeText(activity,"seleccionaste menu",Toast.LENGTH_LONG).show()
+                    "Menus" -> { pasarCategoria("usuarios")
                     }
-                    "Postres" -> { Toast.makeText(activity,"seleccionaste chimichanga",Toast.LENGTH_LONG).show()
+                    "Postres" -> { pasarCategoria("postres")
+                    }
+                    "Bebidas" -> { pasarCategoria("bebidas")
+                    }
+                    "Platos Frios" -> {pasarCategoria("platosFrios")
+                    }
+                    "Platos a la carta" -> { pasarCategoria("platosCarta")
+                    }
+                    "Combos" -> { pasarCategoria("combos")
+                    }
+                    "Licuados" -> { pasarCategoria("licuados")
                     }
                 }
             }
 
         }
+    }
+
+    private fun pasarCategoria(s: String) {
+
+        imagenList= mutableListOf()
+        referenciaImagenes = FirebaseDatabase.getInstance().getReference(s)
+        recyclerImagenes.layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
+        val miAdapter= RecyclerAdapter(imagenList)
+        recyclerImagenes.adapter =miAdapter
+        referenciaImagenes.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                imagenList.clear()
+                referenciaImagenes = FirebaseDatabase.getInstance().getReference(category)
+                if(p0.exists()){
+                    for (h in p0.children){
+                        val uplo = h.getValue(Upload::class.java)
+                        imagenList.add(uplo!!)
+                        recyclerImagenes.adapter=miAdapter
+                    }
+                    for (h in imagenList){
+                    }
+                }else{
+                    referenciaImagenes = FirebaseDatabase.getInstance().getReference(category)
+                    imagenList.clear()
+                }
+            }
+        })
+
+        referenciaImagenes = FirebaseDatabase.getInstance().getReference(s)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -79,98 +119,79 @@ class PedirFragment : Fragment() {
             intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
+        category="usuarios"
+        referenciaImagenes = FirebaseDatabase.getInstance().getReference(category)
+    referenciaPedidos = FirebaseDatabase.getInstance().getReference("Pedidos")
+    referenciaConfirmados = FirebaseDatabase.getInstance().getReference("Confirmados")
+    imagenList= mutableListOf()
+    pedidosList= mutableListOf()
+    recyclerPedidos=v.listaView
+    recyclerImagenes=v.rv_menus
 
-        val categoria="usuarios"
-        referenciaImagenes = FirebaseDatabase.getInstance().getReference(categoria)
-        referenciaPedidos = FirebaseDatabase.getInstance().getReference("Pedidos")
-        referenciaConfirmados = FirebaseDatabase.getInstance().getReference("Confirmados")
-        imagenList= mutableListOf()
-        pedidosList= mutableListOf()
-        recyclerPedidos=v.listaView
-        recyclerImagenes=v.rv_menus
-
-        val precio =v.tvPrecio
-        precioTotal = 0
+    val precio =v.tvPrecio
+    precioTotal = 0
 
 
-        recyclerImagenes.layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
-        val miAdapter= RecyclerAdapter(imagenList)
-        recyclerImagenes.adapter =miAdapter
+    recyclerImagenes.layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
+    val miAdapter= RecyclerAdapter(imagenList)
+    recyclerImagenes.adapter =miAdapter
 
-        recyclerPedidos.layoutManager=LinearLayoutManager(activity,LinearLayout.VERTICAL,false)
-        val mi2Adapter= AdapterFragment(pedidosList)
-        recyclerPedidos.adapter =mi2Adapter
+    recyclerPedidos.layoutManager=LinearLayoutManager(activity,LinearLayout.VERTICAL,false)
+    val mi2Adapter= AdapterFragment(pedidosList)
+    recyclerPedidos.adapter =mi2Adapter
 //******************************Pasamos todos los atributos de la base de datos a la lista de imagenes******************
 
-        referenciaImagenes.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {}
-
-            override fun onDataChange(p0: DataSnapshot) {
-                imagenList.clear()
-                if(p0.exists()){
-                    for (h in p0.children){
-                        val uplo = h.getValue(Upload::class.java)
-                        imagenList.add(uplo!!)
-                        recyclerImagenes.adapter=miAdapter
-                    }
-                    for (h in imagenList){
-                    }
-                }else{
-                    imagenList.clear()
-                }
-            }
-        })
 
 //*******************************Pasamos todos los atributos de la base de datos a la lista de pedidos***********************************************
-        referenciaPedidos.addValueEventListener(object :ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0.exists()){
-                    precioTotal=0
-                    pedidosList.clear()
-                    for (h in p0.children){
-                        val hero = h.getValue(BaseDeDatos::class.java)
+    referenciaPedidos.addValueEventListener(object :ValueEventListener{
+        override fun onCancelled(p0: DatabaseError) {
+        }
+        override fun onDataChange(p0: DataSnapshot) {
+            if(p0.exists()){
+                precioTotal=0
+                pedidosList.clear()
+                for (h in p0.children){
+                    val hero = h.getValue(BaseDeDatos::class.java)
 
-                        pedidosList.add(hero!!)
-                    }
-                    recyclerPedidos.adapter=mi2Adapter
-                    for (h in pedidosList){
+                    pedidosList.add(hero!!)
+                }
+                recyclerPedidos.adapter=mi2Adapter
+                for (h in pedidosList){
                     precioTotal = precioTotal + (h.cant.toInt() * h.precio.toInt())
-                    }
-                    precio.text=precioTotal.toString()
                 }
-                else{
-                    pedidosList.clear()
-                    recyclerPedidos.adapter=mi2Adapter
-                    precioTotal = 0
-                    precio.text=precioTotal.toString()
-                }
+                precio.text=precioTotal.toString()
+            }
+            else{
+                pedidosList.clear()
+                recyclerPedidos.adapter=mi2Adapter
+                precioTotal = 0
+                precio.text=precioTotal.toString()
             }
         }
-        )
-
-
-        val btn =v.btnEnviar
-        btn.setOnClickListener {
-            val frag2 = PedidosFragment()
-
-            fragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.contenedorFragments,frag2)
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                ?.commit()
-
-            for (h in pedidosList){
-                val heroId =  FirebaseAuth.getInstance().uid.toString()
-                val heros = referenciaPedidos.push().key.toString()
-                val hero = BaseDeDatos(heroId,"",h.menu,h.llevar,h.cant,h.precio,heros)
-                referenciaConfirmados.child(heros).setValue(hero)
-            }
-            referenciaPedidos.removeValue()
-        }
-        return v
     }
+    )
+
+
+    val btn =v.btnEnviar
+    btn.setOnClickListener {
+        val frag2 = PedidosFragment()
+
+        fragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.contenedorFragments,frag2)
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ?.commit()
+
+        for (h in pedidosList){
+            val heroId =  FirebaseAuth.getInstance().uid.toString()
+            val heros = referenciaPedidos.push().key.toString()
+            val hero = BaseDeDatos(heroId,"",h.menu,h.llevar,h.cant,h.precio,heros)
+            referenciaConfirmados.child(heros).setValue(hero)
+        }
+        referenciaPedidos.removeValue()
+    }
+    return v
+}
     companion object {
         fun newInstance(): PedirFragment{
             val fragment=PedirFragment()
