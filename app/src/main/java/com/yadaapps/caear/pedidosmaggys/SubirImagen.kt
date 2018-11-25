@@ -1,7 +1,6 @@
 package com.yadaapps.caear.pedidosmaggys
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
 
 import android.net.Uri
@@ -16,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import com.yadaapps.caear.pedidosmaggys.Datos.DatosImagenes
 import kotlinx.android.synthetic.main.activity_subir_imagen.*
 import java.util.*
 
@@ -75,7 +75,8 @@ class SubirImagen : AppCompatActivity() {
     {
         val uid = FirebaseAuth.getInstance().uid ?:""//guardo en uid la autentificacion
         val ref = FirebaseDatabase.getInstance().getReference("/usuarios/$uid")//carlos= $uid creo una base de datos re piola
-        val user = Upload("Carlos","nombre",imagenUrl,"","")//guardo la imagen y
+        val user =
+            DatosImagenes("Carlos", "nombre", imagenUrl, "", "")//guardo la imagen y
         ref.setValue(user)
     }
 

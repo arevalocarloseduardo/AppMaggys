@@ -14,6 +14,8 @@ import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.yadaapps.caear.pedidosmaggys.*
+import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
+import com.yadaapps.caear.pedidosmaggys.Datos.DatosImagenes
 import com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments.AdapterFragment
 import com.yadaapps.caear.pedidosmaggys.R
 import kotlinx.android.synthetic.main.fragment_pedir.*
@@ -25,12 +27,11 @@ class PedirFragment : Fragment() {
     lateinit var referenciaPedidos : DatabaseReference
     lateinit var referenciaConfirmados : DatabaseReference
 
-    lateinit var pedidosList:MutableList<BaseDeDatos>
-    lateinit var imagenList:MutableList<Upload>
+    lateinit var pedidosList:MutableList<DatosPedidos>
+    lateinit var imagenList:MutableList<DatosImagenes>
 
     lateinit var recyclerImagenes: RecyclerView
     lateinit var recyclerPedidos: RecyclerView
-    lateinit var category: String
 
     internal lateinit var spiner:Spinner
     internal var listaSpin= arrayOf("Menus","Postres","Bebidas","Platos Frios","Platos a la carta","Combos","Licuados")
@@ -107,7 +108,7 @@ class PedirFragment : Fragment() {
                         referenciaImagenes = FirebaseDatabase.getInstance().getReference(s)
                         if(p0.exists()){
                             for (h in p0.children){
-                                val uplo = h.getValue(Upload::class.java)
+                                val uplo = h.getValue(DatosImagenes::class.java)
                                 imagenList.add(uplo!!)
                                 recyclerImagenes.adapter=miAdapter
                             }
@@ -119,7 +120,6 @@ class PedirFragment : Fragment() {
                         }
                     }
                 })
-
 //*******************************Pasamos todos los atributos de la base de datos a la lista de pedidos***********************************************
                 referenciaPedidos.addValueEventListener(object :ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {}
@@ -129,7 +129,7 @@ class PedirFragment : Fragment() {
                             pedidosList.clear()
 
                             for (h in p0.children){
-                                val hero = h.getValue(BaseDeDatos::class.java)
+                                val hero = h.getValue(DatosPedidos::class.java)
                                 pedidosList.add(hero!!)
                             }
                             recyclerPedidos.adapter=mi2Adapter
@@ -152,21 +152,6 @@ class PedirFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val v= inflater.inflate(R.layout.fragment_pedir, container, false)
-/*
-        recyclerImagenes=v.listaView
-        referenciaPedidos = FirebaseDatabase.getInstance().getReference("Pedidos")
-        referenciaConfirmados = FirebaseDatabase.getInstance().getReference("Confirmados")
-        pedidosList= mutableListOf()
-        recyclerPedidos=v.listaView
-
-        val precio =v.tvPrecio
-        precioTotal = 0
-
-
-        recyclerPedidos.layoutManager=LinearLayoutManager(activity,LinearLayout.VERTICAL,false)
-        val mi2Adapter= AdapterFragment(pedidosList)
-        recyclerPedidos.adapter =mi2Adapter
-        */
 
         val btn =v.btnEnviar
         btn.setOnClickListener {
@@ -174,20 +159,25 @@ class PedirFragment : Fragment() {
             for (h in pedidosList){
                 val heroId =  FirebaseAuth.getInstance().uid.toString()
                 val heros = referenciaPedidos.push().key.toString()
-                val hero = BaseDeDatos(heroId,"",h.menu,h.llevar,h.cant,h.precio,heros)
+                val hero = DatosPedidos(heroId,"",h.menu,h.llevar,h.cant,h.precio,heros,"A confirmar","","","","","")
                 referenciaConfirmados.child(heros).setValue(hero)
             }
-            referenciaPedidos.removeValue()
-                val frag2 = PedidosFragment()
-                fragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.contenedorFragments,frag2)
-                    ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    ?.commit()
+                referenciaPedidos.removeValue()
+                irFragment()
 
         }
     return v
     }
+
+    private fun irFragment() {
+        val frag2 = PedidosFragment()
+        fragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.contenedorFragments,frag2)
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ?.commit()
+    }
+
     companion object {
         fun newInstance(): PedirFragment{
             val fragment=PedirFragment()
