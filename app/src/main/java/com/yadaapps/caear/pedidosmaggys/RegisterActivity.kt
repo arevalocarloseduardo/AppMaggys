@@ -74,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val uid = FirebaseAuth.getInstance().uid ?:""//guardo en uid la autentificacion
         val ref = FirebaseDatabase.getInstance().getReference("/Users/$uid")//carlos= $uid creo una base de datos re piola
-        val user = DatosUsuario(uid,nombre,"foto","edad",correo,"telefono","60","99","calle 10")//guardo la imagen y
+        val user = DatosUsuario(uid,nombre,"foto","edad",correo,"telefono","0","1","calle 10")//guardo la imagen y
         ref.setValue(user)
         startActivity(Intent(this,LoginActivity::class.java))
     }
