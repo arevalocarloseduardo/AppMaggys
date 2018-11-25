@@ -18,6 +18,7 @@ import com.google.firebase.database.*
 import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
 import com.yadaapps.caear.pedidosmaggys.Fragments.PedidosFragment
 import com.yadaapps.caear.pedidosmaggys.Fragments.PedirFragment
+import com.yadaapps.caear.pedidosmaggys.Fragments.PerfilFragment
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import kotlinx.android.synthetic.main.content_menu.*
@@ -26,11 +27,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var pedirFragment:PedirFragment//Primer Caso para crear un fragment
     lateinit var pedidosFragment:PedidosFragment
+    lateinit var perfilFragment:PerfilFragment
 
     lateinit var referenciaUsuarios : DatabaseReference
     lateinit var usuariosList:MutableList<DatosUsuario>
     lateinit var auth: FirebaseAuth
-
     lateinit var txtWelcome:TextView
 
 
@@ -60,27 +61,13 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     for (h in usuariosList){
                         txtWelcome.text = "Bienvenido "+h.nombre
                     }
-
                 }
             }
-
-
         })
-
-        /*var fire = FirebaseAuth.getInstance()
-
-            if(fire.currentUser == null){
-                finish()
-                startActivity(Intent(this,LoginActivity::class.java))
-            }
-*/
-
         pedirFragment=PedirFragment.newInstance()//segundo Paso para crear un fragment
         pedidosFragment=PedidosFragment.newInstance()
-
+        perfilFragment=PerfilFragment.newInstance()
         txtWelcome=txtBien
-
-
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
@@ -108,33 +95,39 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.action_settings ->  {
-
                 var firse = FirebaseAuth.getInstance()
                 firse.signOut()
-                //val uid = FirebaseAuth.getInstance().uid
-               // if(uid==null){
                 finish()
-                    startActivity(Intent(this,LoginActivity::class.java))
+                startActivity(Intent(this,LoginActivity::class.java))
             }
 
         }
         return true
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+
         when (item.itemId) {
             R.id.nav_camera -> {
                 txtWelcome.visibility= View.INVISIBLE
                 supportFragmentManager
-                .beginTransaction()
+                    .beginTransaction()
+                    .replace(R.id.contenedorFragments,perfilFragment)
+                    //.addToBackStack(PedidosFragment.toString())
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+            }
+            R.id.nav_gallery -> {
+                txtWelcome.visibility= View.INVISIBLE
+                supportFragmentManager
+                    .beginTransaction()
                     .replace(R.id.contenedorFragments,pedirFragment)
                     //.addToBackStack(PedidosFragment.toString())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
-            R.id.nav_gallery -> {
+            R.id.nav_slideshow -> {
                 txtWelcome.visibility= View.INVISIBLE
                 supportFragmentManager
                     .beginTransaction()
@@ -142,13 +135,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     //.addToBackStack(PedidosFragment.toString())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
-
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
             }
             R.id.nav_share -> {
 

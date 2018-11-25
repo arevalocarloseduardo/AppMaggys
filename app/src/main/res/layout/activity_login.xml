@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:singleLine="true"
-                        android:drawableLeft="@drawable/fui_ic_github_white_24dp"
+                        android:drawableLeft="@mipmap/ic_launcher_contras"
                         android:drawableTint="#2a849f"
                         android:hint="Contraseña"
                         android:inputType="textPassword" android:id="@+id/txtPass"/>
