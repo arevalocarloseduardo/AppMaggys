@@ -40,6 +40,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_menu)
         setSupportActionBar(toolbar)
 
+
         referenciaUsuarios = FirebaseDatabase.getInstance().getReference("Users")
         usuariosList= mutableListOf()
 
