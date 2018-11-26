@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys
+package com.yadaapp.caear.appfuentemaggys
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -10,9 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosUsuario
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_register.view.*
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var txtName: EditText

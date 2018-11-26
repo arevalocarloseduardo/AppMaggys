@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys
+package com.yadaapp.caear.appfuentemaggys
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosImagenes
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosPedidos
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosImagenes
 import kotlinx.android.synthetic.main.menus.view.*
 import java.lang.Exception
 

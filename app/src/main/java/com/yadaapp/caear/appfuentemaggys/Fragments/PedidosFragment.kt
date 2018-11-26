@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys.Fragments
+package com.yadaapp.caear.appfuentemaggys.Fragments
 
 
 import android.os.Bundle
@@ -12,14 +12,14 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments.PedidosAdapter
-import com.yadaapps.caear.pedidosmaggys.R
+import com.yadaapp.caear.appfuentemaggys.Fragments.AdaptadoresFragments.PedidosAdapter
+import com.yadaapp.caear.appfuentemaggys.R
 
 import kotlinx.android.synthetic.main.fragment_pedidos.view.*
 
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseReference
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosPedidos
 
 
 class PedidosFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys.Fragments
+package com.yadaapp.caear.appfuentemaggys.Fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,11 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.yadaapps.caear.pedidosmaggys.*
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosImagenes
-import com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments.AdapterFragment
-import com.yadaapps.caear.pedidosmaggys.R
+import com.yadaapp.caear.appfuentemaggys.*
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosPedidos
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosImagenes
+import com.yadaapp.caear.appfuentemaggys.Fragments.AdaptadoresFragments.AdapterFragment
+import com.yadaapp.caear.appfuentemaggys.R
 import kotlinx.android.synthetic.main.fragment_pedir.*
 import kotlinx.android.synthetic.main.fragment_pedir.view.*
 

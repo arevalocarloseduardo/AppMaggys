@@ -1,8 +1,7 @@
-package com.yadaapps.caear.pedidosmaggys
+package com.yadaapp.caear.appfuentemaggys
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
@@ -13,12 +12,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
-import com.yadaapps.caear.pedidosmaggys.Fragments.PedidosFragment
-import com.yadaapps.caear.pedidosmaggys.Fragments.PedirFragment
-import com.yadaapps.caear.pedidosmaggys.Fragments.PerfilFragment
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosUsuario
+import com.yadaapp.caear.appfuentemaggys.Fragments.PedidosFragment
+import com.yadaapp.caear.appfuentemaggys.Fragments.PedirFragment
+import com.yadaapp.caear.appfuentemaggys.Fragments.PerfilFragment
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
 import kotlinx.android.synthetic.main.content_menu.*

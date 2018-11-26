@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys
+package com.yadaapp.caear.appfuentemaggys
 
 import org.junit.Test
 

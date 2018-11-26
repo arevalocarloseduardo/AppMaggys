@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.yadaapps.caear.pedidosmaggys">
+          package="com.yadaapp.caear.appfuentemaggys">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MenuActivity"
+                android:name="com.yadaapp.caear.appfuentemaggys.MenuActivity"
                 android:label="Fuente de Soda Maggy´s"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,14 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SubirImagen">
+        <activity android:name="com.yadaapp.caear.appfuentemaggys.SubirImagen">
         </activity>
-        <activity android:name=".RegisterActivity">
+        <activity android:name="com.yadaapp.caear.appfuentemaggys.RegisterActivity">
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.yadaapp.caear.appfuentemaggys.LoginActivity">
         </activity>
         <activity
-                android:name=".ConfigurarCuentaActivity"
+                android:name="com.yadaapp.caear.appfuentemaggys.ConfigurarCuentaActivity"
                 android:label="@string/title_activity_configurar_cuenta"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>

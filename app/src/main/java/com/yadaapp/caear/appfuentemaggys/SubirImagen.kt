@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys
+package com.yadaapp.caear.appfuentemaggys
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosImagenes
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosImagenes
 import kotlinx.android.synthetic.main.activity_subir_imagen.*
 import java.util.*
 

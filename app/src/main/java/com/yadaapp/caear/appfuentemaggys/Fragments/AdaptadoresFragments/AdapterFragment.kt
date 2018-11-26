@@ -1,4 +1,4 @@
-package com.yadaapps.caear.pedidosmaggys.Fragments.AdaptadoresFragments
+package com.yadaapp.caear.appfuentemaggys.Fragments.AdaptadoresFragments
 
 
 import android.support.v7.widget.RecyclerView
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.google.firebase.database.FirebaseDatabase
-import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
-import com.yadaapps.caear.pedidosmaggys.R
+import com.yadaapp.caear.appfuentemaggys.Datos.DatosPedidos
+import com.yadaapp.caear.appfuentemaggys.R
 import kotlinx.android.synthetic.main.datos.view.*
 
 class AdapterFragment(var list: MutableList<DatosPedidos>): RecyclerView.Adapter<AdapterFragment.ViewHolder>(){
