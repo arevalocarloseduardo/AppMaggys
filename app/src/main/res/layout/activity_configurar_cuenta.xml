@@ -38,16 +38,29 @@
 
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:drawableLeft="@mipmap/ic_launcher_nombre"
+                        android:drawableTint="#2a849f"
+                        android:singleLine="true"
+                        android:hint="Nombre"
+                        android:inputType="textEmailAddress" android:id="@+id/tiNombre"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="45dp"
-                        android:drawableLeft="@mipmap/ic_launcher_email"
+                        android:drawableLeft="@mipmap/ic_launcher_phone"
                         android:drawableTint="#2a849f"
                         android:singleLine="true"
-                        android:hint="Correo"
-                        android:inputType="textEmailAddress" android:id="@+id/txtUser"/>
+                        android:hint="Telefono"
+                        android:id="@+id/tiTelefono" android:inputType="phone"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -57,20 +70,12 @@
                 <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="45dp"
-                        android:drawableLeft="@mipmap/ic_launcher_correochiq"
+                        android:drawableLeft="@mipmap/ic_launcher_direccion"
                         android:drawableTint="#2a849f"
                         android:singleLine="true"
-                        android:hint="Contraseña"
-                        android:inputType="textPassword" android:id="@+id/txtPass"/>
+                        android:hint="Dirección"
+                        android:id="@+id/tiDireccion" android:inputType="textPostalAddress"/>
             </android.support.design.widget.TextInputLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:paddingTop="5dp"
-
-                    android:text="¿No tenes Cuenta?" android:id="@+id/txtNotenes"/>
 
 
             <Button
@@ -78,10 +83,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="22dp"
                     android:background="#0d6f96"
-                    android:text="Iniciar"
+                    android:text="Listo"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:textSize="18sp" android:id="@+id/btn_Iniciar"/>
+                    android:textSize="18sp" android:id="@+id/btn_Listo"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -92,5 +97,5 @@
             android:layout_alignParentStart="true" android:layout_marginStart="0dp"
             android:layout_alignParentTop="true" android:id="@+id/progressBarLog" android:layout_marginTop="0dp"
             tools:visibility="gone"
-    android:indeterminate="true"/>
+            android:indeterminate="true"/>
 </RelativeLayout>

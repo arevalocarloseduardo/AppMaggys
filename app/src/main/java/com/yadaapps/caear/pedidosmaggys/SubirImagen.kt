@@ -75,8 +75,7 @@ class SubirImagen : AppCompatActivity() {
     {
         val uid = FirebaseAuth.getInstance().uid ?:""//guardo en uid la autentificacion
         val ref = FirebaseDatabase.getInstance().getReference("/usuarios/$uid")//carlos= $uid creo una base de datos re piola
-        val user =
-            DatosImagenes("Carlos", "nombre", imagenUrl, "", "")//guardo la imagen y
+        val user = DatosImagenes("Carlos", "nombre", imagenUrl, "", "")//guardo la imagen y
         ref.setValue(user)
     }
 

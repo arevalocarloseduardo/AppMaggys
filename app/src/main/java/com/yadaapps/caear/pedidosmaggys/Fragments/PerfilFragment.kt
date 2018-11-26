@@ -4,19 +4,24 @@ package com.yadaapps.caear.pedidosmaggys.Fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.yadaapps.caear.pedidosmaggys.ConfigurarCuentaActivity
 import com.yadaapps.caear.pedidosmaggys.Datos.DatosPedidos
 
 import com.yadaapps.caear.pedidosmaggys.Datos.DatosUsuario
+import com.yadaapps.caear.pedidosmaggys.LoginActivity
 import com.yadaapps.caear.pedidosmaggys.R
 import com.yadaapps.caear.pedidosmaggys.RegisterActivity
 import kotlinx.android.synthetic.main.fragment_pedidos.view.*
+import kotlinx.android.synthetic.main.fragment_perfil.*
 import kotlinx.android.synthetic.main.fragment_perfil.view.*
 
 
@@ -30,7 +35,7 @@ class PerfilFragment : Fragment() {
     lateinit var telefono :TextView
     lateinit var direccion :TextView
 
-    lateinit var btnConfigurar:TextView
+    lateinit var btnConfigurar:Button
 
     lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +56,17 @@ class PerfilFragment : Fragment() {
         correo=v.tvPerfilCorreo
         telefono=v.tvPerfilTelefono
         direccion=v.tvPerfilDireccion
-
+        btnConfigurar=v.btnPerfilConfigurar
 
         traerDatos(referenciaUsuarios)
-        btnConfigurar
+
+        btnConfigurar.setOnClickListener { enviarFragment() }
 
         return v
+    }
+
+    private fun enviarFragment() {
+        startActivity(Intent(activity, ConfigurarCuentaActivity::class.java))
     }
 
 

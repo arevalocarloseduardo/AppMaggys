@@ -14,21 +14,23 @@
         <activity
                 android:name=".MenuActivity"
                 android:label="Fuente de Soda Maggy´s"
-                android:theme="@style/AppTheme.NoActionBar"
-                >
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".SubirImagen">
         </activity>
-
         <activity android:name=".RegisterActivity">
         </activity>
         <activity android:name=".LoginActivity">
+        </activity>
+        <activity
+                android:name=".ConfigurarCuentaActivity"
+                android:label="@string/title_activity_configurar_cuenta"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
